@@ -12,10 +12,10 @@ func main() {
 		var b int
 
 		fmt.Println("Input Choices:")
-		fmt.Println("add a b")
-		fmt.Println("sub a b")
-		fmt.Println("mul a b")
-		fmt.Println("div a b")
+		fmt.Println("+ a b")
+		fmt.Println("- a b")
+		fmt.Println("* a b")
+		fmt.Println("/ a b")
 		fmt.Println("Type 'help' or 'quit'")
 		fmt.Print("> ")
 
@@ -34,10 +34,10 @@ func main() {
 		if choice == "help" {
 
 			fmt.Println("Help instructions:")
-			fmt.Println("add a b to add use this= add 5 6 ")
-			fmt.Println("sub a b to subtract use = sub 9 2")
-			fmt.Println("mul a b to multiply use = mul 7 2")
-			fmt.Println("div a b to divide use = div 8 2")
+			fmt.Println("add a b to add use this= + 5 6 ")
+			fmt.Println("sub a b to subtract use = - 9 2")
+			fmt.Println("mul a b to multiply use = * 7 2")
+			fmt.Println("div a b to divide use = / 8 2")
 			fmt.Println(" you will see your result deisplayed below the calculation")
 			continue
 		}
@@ -48,16 +48,16 @@ func main() {
 			continue
 		}
 
-		if choice == "add" {
+		if choice == "+" {
 			fmt.Println("✦ Result:", a+b)
 
-		} else if choice == "sub" {
+		} else if choice == "-" {
 			fmt.Println("✦ Result:", a-b)
 
-		} else if choice == "mul" {
+		} else if choice == "*" {
 			fmt.Println("✦ Result:", a*b)
 
-		} else if choice == "div" {
+		} else if choice == "/" {
 			if b == 0 {
 				fmt.Println("Error: cannot divide by zero")
 				continue
