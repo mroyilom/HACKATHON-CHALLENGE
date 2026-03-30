@@ -6,13 +6,11 @@ import (
 	"strings"
 )
 
-// convert string in any base to decimal
-func toDecimal(value string, base int) (int64, error) {
-	return strconv.ParseInt(value, base, 64)
+func BaseConverter(word string, base int) (int64, error) {
+	return strconv.ParseInt(word, base, 64)
 }
 
-// convert decimal to any base
-func fromDecimal(n int64, base int) string {
+func dex(n int64, base int) string {
 	result := strconv.FormatInt(n, base)
 	return strings.ToUpper(result)
 }
@@ -20,32 +18,37 @@ func fromDecimal(n int64, base int) string {
 func main() {
 
 	for {
-		var command string
-		var value string
+		var choice string
+		var word string
 		var base string
 
-		fmt.Println("Use: convert <value> <base>")
-		fmt.Println("Bases: hex | bin | dec")
+		fmt.Println("Input Commands:")
+		fmt.Println("convert <number> <base>")
+		fmt.Println("base: hex | bin | dec")
 		fmt.Println("Type 'quit' to exit")
 		fmt.Print("> ")
 
-		_, err := fmt.Scan(&command)
+		// read command safely
+		_, err := fmt.Scan(&choice)
 		if err != nil {
 			fmt.Println("Error: invalid input")
 			continue
 		}
 
-		if command == "quit" {
+		choice = strings.ToLower(choice)
+
+		if choice == "quit" {
 			fmt.Println("Goodbye")
 			return
 		}
 
-		if command != "convert" {
+		if choice != "convert" {
 			fmt.Println("Unknown command")
 			continue
 		}
 
-		_, err = fmt.Scan(&value, &base)
+		// read value and base
+		_, err = fmt.Scan(&word, &base)
 		if err != nil {
 			fmt.Println("Error: missing input")
 			continue
@@ -53,32 +56,34 @@ func main() {
 
 		base = strings.ToLower(base)
 
-		// HEX input
+		// HEX → DECIMAL
 		if base == "hex" {
-			dec, err := toDecimal(value, 16)
+			result, err := BaseConverter(word, 16)
 			if err != nil {
 				fmt.Println("Error: invalid hex")
 				continue
 			}
-			fmt.Println("✦ Decimal:", dec)
+			fmt.Println("✦ Decimal:", result)
 
+			// BIN → DECIMAL
 		} else if base == "bin" {
-			dec, err := toDecimal(value, 2)
+			result, err := BaseConverter(word, 2)
 			if err != nil {
 				fmt.Println("Error: invalid binary")
 				continue
 			}
-			fmt.Println("✦ Decimal:", dec)
+			fmt.Println("✦ Decimal:", result)
 
+			// DECIMAL → BIN + HEX
 		} else if base == "dec" {
-			dec, err := toDecimal(value, 10)
+			n, err := strconv.ParseInt(word, 10, 64)
 			if err != nil {
 				fmt.Println("Error: invalid decimal")
 				continue
 			}
 
-			fmt.Println("✦ Binary:", fromDecimal(dec, 2))
-			fmt.Println("✦ Hex:", fromDecimal(dec, 16))
+			fmt.Println("✦ Binary:", dex(n, 2))
+			fmt.Println("✦ Hex:", dex(n, 16))
 
 		} else {
 			fmt.Println("Error: base must be hex, bin, or dec")
